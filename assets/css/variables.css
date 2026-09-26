@@ -9,6 +9,7 @@
 
 	--bg-body: #f8fafc;
 	--bg-card: #ffffff;
+	--bg-header: rgba(255, 255, 255, 0.9);
 	--text-primary: #0f172a;
 	--text-secondary: #475569;
 	--text-muted: #94a3b8;
@@ -24,4 +25,19 @@
 	--shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 
 	--container-max-width: 1240px;
+}
+
+/* Dark Mode Color Overrides */
+[data-theme="dark"] {
+	--bg-body: #0b0f19;
+	--bg-card: #111827;
+	--bg-header: rgba(17, 24, 39, 0.9);
+	--text-primary: #f9fafb;
+	--text-secondary: #cbd5e1;
+	--text-muted: #64748b;
+	--border-color: #1e293b;
+	--gradient-card: linear-gradient(135deg, #111827 0%, #1e293b 100%);
+	--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+	--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+	--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
 }

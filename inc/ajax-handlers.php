@@ -114,6 +114,41 @@ function pw_tools_filter_archive_query( $query ) {
 add_action( 'pre_get_posts', 'pw_tools_filter_archive_query' );
 
 /**
+ * AJAX Handler for Tool Rating Submissions
+ */
+function pw_tools_submit_tool_rating() {
+	check_ajax_referer( 'pw_tools_nonce', 'nonce' );
+
+	$tool_id = isset( $_POST['tool_id'] ) ? absint( $_POST['tool_id'] ) : 0;
+	$rating  = isset( $_POST['rating'] ) ? absint( $_POST['rating'] ) : 0;
+
+	if ( ! $tool_id || $rating < 1 || $rating > 5 ) {
+		wp_send_json_error( array( 'message' => __( 'Invalid rating parameters.', 'pickwitty-tools-pro' ) ) );
+	}
+
+	$current_sum   = (int) get_post_meta( $tool_id, '_pw_tool_rating_sum', true );
+	$current_count = (int) get_post_meta( $tool_id, '_pw_tool_rating_count', true );
+
+	$new_sum   = $current_sum + $rating;
+	$new_count = $current_count + 1;
+
+	update_post_meta( $tool_id, '_pw_tool_rating_sum', $new_sum );
+	update_post_meta( $tool_id, '_pw_tool_rating_count', $new_count );
+
+	$avg = round( $new_sum / $new_count, 1 );
+
+	wp_send_json_success(
+		array(
+			'message' => __( 'Thank you for your rating!', 'pickwitty-tools-pro' ),
+			'avg'     => $avg,
+			'count'   => $new_count,
+		)
+	);
+}
+add_action( 'wp_ajax_pw_submit_tool_rating', 'pw_tools_submit_tool_rating' );
+add_action( 'wp_ajax_nopriv_pw_submit_tool_rating', 'pw_tools_submit_tool_rating' );
+
+/**
  * AJAX Handler for Contact Form
  */
 function pw_tools_submit_contact_form() {

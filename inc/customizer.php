@@ -21,6 +21,23 @@ function pw_tools_customize_register( $wp_customize ) {
 		)
 	);
 
+	// Dark Mode Default Toggle
+	$wp_customize->add_setting(
+		'pw_enable_dark_mode_toggle',
+		array(
+			'default'           => true,
+			'sanitize_callback' => 'wp_validate_boolean',
+		)
+	);
+	$wp_customize->add_control(
+		'pw_enable_dark_mode_toggle',
+		array(
+			'label'    => __( 'Show Dark/Light Mode Toggle in Header', 'pickwitty-tools-pro' ),
+			'section'  => 'pw_color_options',
+			'type'     => 'checkbox',
+		)
+	);
+
 	// Primary Accent Color
 	$wp_customize->add_setting(
 		'pw_primary_color',
