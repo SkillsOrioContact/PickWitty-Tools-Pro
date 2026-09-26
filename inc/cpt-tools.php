@@ -206,7 +206,8 @@ function pw_tools_save_meta( $post_id ) {
 
 	// Code fields allowing raw HTML, CSS, JS
 	if ( isset( $_POST['pw_tool_html'] ) ) {
-		update_post_meta( $post_id, '_pw_tool_html', $_POST['pw_tool_html'] );
+		$clean_html = pw_tools_strip_structural_elements( $_POST['pw_tool_html'] );
+		update_post_meta( $post_id, '_pw_tool_html', $clean_html );
 	}
 
 	if ( isset( $_POST['pw_tool_css'] ) ) {
@@ -218,6 +219,25 @@ function pw_tools_save_meta( $post_id ) {
 	}
 }
 add_action( 'save_post_tool', 'pw_tools_save_meta' );
+
+/**
+ * Utility Function: Strip structural layout elements (<header>, <footer>, <nav>, <aside>) from Tool Code input.
+ */
+function pw_tools_strip_structural_elements( $html ) {
+	if ( empty( $html ) ) {
+		return '';
+	}
+
+	// Remove structural wrapper tags
+	$patterns = array(
+		'/<header[\s\S]*?<\/header>/i',
+		'/<footer[\s\S]*?<\/footer>/i',
+		'/<nav[\s\S]*?<\/nav>/i',
+		'/<aside[\s\S]*?<\/aside>/i',
+	);
+
+	return preg_replace( $patterns, '', $html );
+}
 
 /**
  * Output Tool Inline CSS and JS on Single Tool Page

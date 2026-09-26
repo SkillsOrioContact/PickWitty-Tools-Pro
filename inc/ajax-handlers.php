@@ -99,6 +99,21 @@ add_action( 'wp_ajax_pw_load_more_posts', 'pw_tools_load_more_posts' );
 add_action( 'wp_ajax_nopriv_pw_load_more_posts', 'pw_tools_load_more_posts' );
 
 /**
+ * Filter Main Query on Blog Archive Page based on URL Year/Month Filters
+ */
+function pw_tools_filter_archive_query( $query ) {
+	if ( ! is_admin() && $query->is_main_query() && ( $query->is_home() || $query->is_archive() ) ) {
+		if ( ! empty( $_GET['pw_archive_year'] ) ) {
+			$query->set( 'year', sanitize_text_field( $_GET['pw_archive_year'] ) );
+		}
+		if ( ! empty( $_GET['pw_archive_month'] ) ) {
+			$query->set( 'monthnum', sanitize_text_field( $_GET['pw_archive_month'] ) );
+		}
+	}
+}
+add_action( 'pre_get_posts', 'pw_tools_filter_archive_query' );
+
+/**
  * AJAX Handler for Contact Form
  */
 function pw_tools_submit_contact_form() {

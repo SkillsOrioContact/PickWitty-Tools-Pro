@@ -49,7 +49,20 @@ function pw_tools_activation_setup() {
 	$page_ids = array();
 
 	foreach ( $pages as $page_title => $page_data ) {
-		$existing_page = get_page_by_title( $page_title );
+		$query = new WP_Query(
+			array(
+				'post_type'              => 'page',
+				'title'                  => $page_title,
+				'post_status'            => 'all',
+				'posts_per_page'         => 1,
+				'no_found_rows'          => true,
+				'ignore_sticky_posts'    => true,
+				'update_post_term_cache' => false,
+				'update_post_meta_cache' => false,
+			)
+		);
+		$existing_page = ! empty( $query->posts ) ? $query->posts[0] : null;
+
 		if ( ! $existing_page ) {
 			$page_id = wp_insert_post(
 				array(
