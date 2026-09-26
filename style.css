@@ -1,0 +1,17 @@
+/*
+Theme Name: PickWitty Tools Pro
+Theme URI: https://pickwitty.com/pickwitty-tools-pro
+Author: PickWitty
+Author URI: https://pickwitty.com
+Description: PickWitty Tools Pro is a premium, lightning-fast, SEO-optimized WordPress theme designed for tools and software utility websites. Features custom tool CPT, AdSense integration, customizer controls, AJAX infinite scroll blog, and SaaS-grade UI components.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: pickwitty-tools-pro
+Tags: tools, software-utilities, custom-colors, custom-menu, featured-images, theme-options, translation-ready, grid-layout
+*/
+
+/* CSS reset and global styles are imported from assets/css/main.css */
